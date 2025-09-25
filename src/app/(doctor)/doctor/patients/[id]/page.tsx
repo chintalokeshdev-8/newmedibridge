@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import PageHeader from "@/components/shared/PageHeader";
 import { patients, doctors } from "@/lib/data";
-import type { LabReport } from '@/lib/types';
+import type { LabReport, Patient } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -15,8 +15,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
-import { FilePlus, User, Heart, Droplet, Calendar, Pill, Lock, FileText, Download, Activity } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
+import { FilePlus, User, Heart, Droplet, Calendar, Pill, Lock, FileText, Download, Activity, Pencil } from 'lucide-react';
 
 const PinVerification = ({ onVerify }: { onVerify: (pin: string) => void }) => {
     const [pin, setPin] = useState('');
@@ -69,12 +69,48 @@ const PinVerification = ({ onVerify }: { onVerify: (pin: string) => void }) => {
     );
 };
 
+const EditConditionsDialog = ({ patient, onSave, onOpenChange, open }: { patient: Patient, onSave: (conditions: string[]) => void, open: boolean, onOpenChange: (open: boolean) => void }) => {
+    const [conditions, setConditions] = useState(patient.activeConditions.join('\n'));
+
+    const handleSave = () => {
+        const updatedConditions = conditions.split('\n').filter(c => c.trim() !== '');
+        onSave(updatedConditions);
+        onOpenChange(false);
+    };
+
+    return (
+        <Dialog open={open} onOpenChange={onOpenChange}>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Edit Active Conditions for {patient.name}</DialogTitle>
+                    <DialogDescription>
+                        Update the list of active conditions. Please list one condition per line.
+                    </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                    <Textarea
+                        value={conditions}
+                        onChange={(e) => setConditions(e.target.value)}
+                        placeholder="Condition one..."
+                        className="h-48"
+                    />
+                </div>
+                <DialogFooter>
+                    <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+                    <Button onClick={handleSave}>Save Changes</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    );
+};
+
+
 export default function PatientDetailPage() {
     const params = useParams();
-    const patient = patients.find(p => p.id === params.id);
-    const doctor = doctors.find(d => d.id === patient?.primaryDoctorId);
+    const initialPatient = patients.find(p => p.id === params.id);
     const { toast } = useToast();
-
+    
+    const [patient, setPatient] = useState(initialPatient);
     const [isUnlocked, setUnlocked] = useState(false);
     const [medication, setMedication] = useState('');
     const [dosage, setDosage] = useState('');
@@ -82,6 +118,9 @@ export default function PatientDetailPage() {
 
     const [selectedReport, setSelectedReport] = useState<LabReport | null>(null);
     const [isReportOpen, setReportOpen] = useState(false);
+    const [isEditConditionsOpen, setEditConditionsOpen] = useState(false);
+
+    const doctor = doctors.find(d => d.id === patient?.primaryDoctorId);
 
     const handlePinVerify = (pin: string) => {
         if (patient && patient.pin === pin) {
@@ -121,6 +160,16 @@ export default function PatientDetailPage() {
     const viewReport = (report: LabReport) => {
         setSelectedReport(report);
         setReportOpen(true);
+    };
+
+    const handleSaveConditions = (updatedConditions: string[]) => {
+        if (patient) {
+            setPatient({ ...patient, activeConditions: updatedConditions });
+            toast({
+                title: 'Conditions Updated',
+                description: "The patient's active conditions have been saved.",
+            });
+        }
     };
 
     if (!patient || !doctor) {
@@ -209,7 +258,12 @@ export default function PatientDetailPage() {
                                    <Badge variant="secondary">Weight: 78kg</Badge>
                                    <Badge variant="secondary">BP: 120/80 mmHg</Badge>
                                </div>
-                               <h3 className="font-semibold text-lg flex items-center gap-2"><Heart className="w-5 h-5 text-primary"/> Active Conditions</h3>
+                               <div className="flex items-center justify-between">
+                                <h3 className="font-semibold text-lg flex items-center gap-2"><Heart className="w-5 h-5 text-primary"/> Active Conditions</h3>
+                                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setEditConditionsOpen(true)}>
+                                    <Pencil className="h-4 w-4" />
+                                </Button>
+                               </div>
                                <div className="flex flex-wrap gap-2">
                                    {patient.activeConditions.map(condition => (
                                        <Badge key={condition} variant="secondary">{condition}</Badge>
@@ -302,7 +356,15 @@ export default function PatientDetailPage() {
                         )}
                     </DialogContent>
                 </Dialog>
+                <EditConditionsDialog 
+                    patient={patient} 
+                    open={isEditConditionsOpen} 
+                    onOpenChange={setEditConditionsOpen} 
+                    onSave={handleSaveConditions} 
+                />
             </main>
         </div>
     );
 }
+
+    
