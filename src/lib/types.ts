@@ -1,7 +1,15 @@
 export type Doctor = {
   id: string;
   name: string;
-  specialty: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber?: string;
+  medicalCouncilNumber: string;
+  department: string;
+  successfulSurgeries: number;
+  mainFocus: string;
+  hospitalName: string;
   status: 'Active' | 'Inactive';
   avatarUrl: string;
 };
@@ -17,7 +25,7 @@ export type Lab = {
 export type Appointment = {
   id: string;
   patientName: string;
-  doctor: Pick<Doctor, 'name' | 'specialty'>;
+  doctor: Pick<Doctor, 'name' | 'department'>;
   time: string;
   date: string;
   status: 'Scheduled' | 'Completed' | 'Canceled';

@@ -31,7 +31,7 @@ export default function AppointmentList({ appointments }: AppointmentListProps) 
                   <TableCell className="font-medium">{appointment.patientName}</TableCell>
                   <TableCell>
                     <div>{appointment.doctor.name}</div>
-                    <div className="text-sm text-muted-foreground">{appointment.doctor.specialty}</div>
+                    <div className="text-sm text-muted-foreground">{appointment.doctor.department}</div>
                   </TableCell>
                   <TableCell>{appointment.time}</TableCell>
                   <TableCell>{appointment.date}</TableCell>

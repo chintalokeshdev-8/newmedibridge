@@ -1,10 +1,11 @@
 import type { Doctor, Lab, Appointment, User } from './types';
 
 export const doctors: Doctor[] = [
-  { id: 'D001', name: 'Dr. Emily Carter', specialty: 'Cardiology', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc1/200/200' },
-  { id: 'D002', name: 'Dr. Ben Adams', specialty: 'Neurology', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc2/200/200' },
-  { id: 'D003', name: 'Dr. Chloe Taylor', specialty: 'Pediatrics', status: 'Inactive', avatarUrl: 'https://picsum.photos/seed/doc3/200/200' },
-  { id: 'D004', name: 'Dr. Marcus Chen', specialty: 'Orthopedics', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc4/200/200' },
+  { id: 'D001', name: 'Dr. Emily Carter', firstName: 'Emily', lastName: 'Carter', email: 'emily.carter@meditrack.pro', medicalCouncilNumber: 'MCI12345', department: 'Cardiology', successfulSurgeries: 150, mainFocus: 'Interventional Cardiology', hospitalName: 'City General Hospital', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc1/200/200' },
+  { id: 'D002', name: 'Dr. Ben Adams', firstName: 'Ben', lastName: 'Adams', email: 'ben.adams@meditrack.pro', medicalCouncilNumber: 'MCI67890', department: 'Neurology', successfulSurgeries: 80, mainFocus: 'Epilepsy', hospitalName: 'City General Hospital', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc2/200/200' },
+  { id: 'D003', name: 'Dr. Chloe Taylor', firstName: 'Chloe', lastName: 'Taylor', email: 'chloe.taylor@meditrack.pro', medicalCouncilNumber: 'MCI13579', department: 'Pediatrics', successfulSurgeries: 200, mainFocus: 'Neonatology', hospitalName: 'Sunrise Children\'s Hospital', status: 'Inactive', avatarUrl: 'https://picsum.photos/seed/doc3/200/200' },
+  { id: 'D004', name: 'Dr. Marcus Chen', firstName: 'Marcus', lastName: 'Chen', email: 'marcus.chen@meditrack.pro', medicalCouncilNumber: 'MCI24680', department: 'Orthopedics', successfulSurgeries: 120, mainFocus: 'Spine Surgery', hospitalName: 'City General Hospital', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc4/200/200' },
+  { id: 'D005', name: 'Dr. Sofia Garcia', firstName: 'Sofia', lastName: 'Garcia', email: 'sofia.garcia@meditrack.pro', medicalCouncilNumber: 'MCI98765', department: 'Cardiology', successfulSurgeries: 95, mainFocus: 'Heart Failure', hospitalName: 'City General Hospital', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc5/200/200' },
 ];
 
 export const labs: Lab[] = [
@@ -15,11 +16,11 @@ export const labs: Lab[] = [
 ];
 
 export const appointments: Appointment[] = [
-  { id: 'A001', patientName: 'John Smith', doctor: { name: 'Dr. Emily Carter', specialty: 'Cardiology' }, date: '2024-08-15', time: '10:00 AM', status: 'Scheduled' },
-  { id: 'A002', patientName: 'Jane Doe', doctor: { name: 'Dr. Ben Adams', specialty: 'Neurology' }, date: '2024-08-15', time: '11:30 AM', status: 'Scheduled' },
-  { id: 'A003', patientName: 'Peter Jones', doctor: { name: 'Dr. Marcus Chen', specialty: 'Orthopedics' }, date: '2024-08-16', time: '09:00 AM', status: 'Completed' },
-  { id: 'A004', patientName: 'Mary Williams', doctor: { name: 'Dr. Emily Carter', specialty: 'Cardiology' }, date: '2024-08-16', time: '02:00 PM', status: 'Canceled' },
-  { id: 'A005', patientName: 'David Brown', doctor: { name: 'Dr. Chloe Taylor', specialty: 'Pediatrics' }, date: '2024-08-17', time: '03:00 PM', status: 'Scheduled' },
+  { id: 'A001', patientName: 'John Smith', doctor: { name: 'Dr. Emily Carter', department: 'Cardiology' }, date: '2024-08-15', time: '10:00 AM', status: 'Scheduled' },
+  { id: 'A002', patientName: 'Jane Doe', doctor: { name: 'Dr. Ben Adams', department: 'Neurology' }, date: '2024-08-15', time: '11:30 AM', status: 'Scheduled' },
+  { id: 'A003', patientName: 'Peter Jones', doctor: { name: 'Dr. Marcus Chen', department: 'Orthopedics' }, date: '2024-08-16', time: '09:00 AM', status: 'Completed' },
+  { id: 'A004', patientName: 'Mary Williams', doctor: { name: 'Dr. Emily Carter', department: 'Cardiology' }, date: '2024-08-16', time: '02:00 PM', status: 'Canceled' },
+  { id: 'A005', patientName: 'David Brown', doctor: { name: 'Dr. Chloe Taylor', department: 'Pediatrics' }, date: '2024-08-17', time: '03:00 PM', status: 'Scheduled' },
 ];
 
 export const users: User[] = [

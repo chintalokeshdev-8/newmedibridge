@@ -28,27 +28,75 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { ScrollArea } from "../ui/scroll-area";
 
-const DoctorForm = ({ onSave }: { onSave: (doctor: Omit<Doctor, 'id' | 'avatarUrl'>) => void }) => {
-  const [name, setName] = useState('');
-  const [specialty, setSpecialty] = useState('');
+const DoctorForm = ({ onSave }: { onSave: (doctor: Omit<Doctor, 'id' | 'avatarUrl' | 'name'>) => void }) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [medicalCouncilNumber, setMedicalCouncilNumber] = useState('');
+  const [department, setDepartment] = useState('');
+  const [successfulSurgeries, setSuccessfulSurgeries] = useState(0);
+  const [mainFocus, setMainFocus] = useState('');
+  const [hospitalName, setHospitalName] = useState('');
   const [status, setStatus] = useState<'Active' | 'Inactive'>('Active');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave({ name, specialty, status });
+    onSave({ 
+      firstName, 
+      lastName, 
+      email, 
+      phoneNumber,
+      medicalCouncilNumber,
+      department,
+      successfulSurgeries,
+      mainFocus,
+      hospitalName,
+      status 
+    });
   };
   
   return (
     <form onSubmit={handleSubmit}>
-      <div className="grid gap-4 py-4">
+      <ScrollArea className="h-[60vh]">
+      <div className="grid gap-4 p-4">
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="name" className="text-right">Name</Label>
-          <Input id="name" value={name} onChange={(e) => setName(e.target.value)} className="col-span-3" placeholder="Dr. John Doe" required />
+          <Label htmlFor="firstName" className="text-right">First Name</Label>
+          <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="col-span-3" placeholder="John" required />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="specialty" className="text-right">Specialty</Label>
-          <Input id="specialty" value={specialty} onChange={(e) => setSpecialty(e.target.value)} className="col-span-3" placeholder="Cardiology" required />
+          <Label htmlFor="lastName" className="text-right">Last Name</Label>
+          <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} className="col-span-3" placeholder="Doe" required />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="email" className="text-right">Email</Label>
+          <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="col-span-3" placeholder="john.doe@example.com" required />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="phoneNumber" className="text-right">Phone (Optional)</Label>
+          <Input id="phoneNumber" type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="col-span-3" placeholder="+1 234 567 890" />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="medicalCouncilNumber" className="text-right">Medical Council No.</Label>
+          <Input id="medicalCouncilNumber" value={medicalCouncilNumber} onChange={(e) => setMedicalCouncilNumber(e.target.value)} className="col-span-3" placeholder="MCI12345" required />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="department" className="text-right">Department</Label>
+          <Input id="department" value={department} onChange={(e) => setDepartment(e.target.value)} className="col-span-3" placeholder="Cardiology" required />
+        </div>
+         <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="hospitalName" className="text-right">Hospital</Label>
+          <Input id="hospitalName" value={hospitalName} onChange={(e) => setHospitalName(e.target.value)} className="col-span-3" placeholder="City General Hospital" required />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="successfulSurgeries" className="text-right">Successful Surgeries</Label>
+          <Input id="successfulSurgeries" type="number" value={successfulSurgeries} onChange={(e) => setSuccessfulSurgeries(parseInt(e.target.value, 10))} className="col-span-3" placeholder="50" required />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="mainFocus" className="text-right">Main Focus</Label>
+          <Input id="mainFocus" value={mainFocus} onChange={(e) => setMainFocus(e.target.value)} className="col-span-3" placeholder="Minimally Invasive Surgery" required />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="status" className="text-right">Status</Label>
@@ -63,7 +111,8 @@ const DoctorForm = ({ onSave }: { onSave: (doctor: Omit<Doctor, 'id' | 'avatarUr
           </Select>
         </div>
       </div>
-      <DialogFooter>
+      </ScrollArea>
+      <DialogFooter className="mt-4">
         <Button type="submit">Save Doctor</Button>
       </DialogFooter>
     </form>
@@ -75,10 +124,12 @@ export default function DoctorsTable({ initialDoctors }: { initialDoctors: Docto
   const [isDialogOpen, setDialogOpen] = useState(false);
   const { toast } = useToast();
 
-  const handleSaveDoctor = (newDoctorData: Omit<Doctor, 'id' | 'avatarUrl'>) => {
+  const handleSaveDoctor = (newDoctorData: Omit<Doctor, 'id' | 'avatarUrl' | 'name'>) => {
+    const fullName = `${newDoctorData.firstName} ${newDoctorData.lastName}`;
     const newDoctor: Doctor = {
       ...newDoctorData,
       id: `D${String(doctors.length + 1).padStart(3, '0')}`,
+      name: fullName,
       avatarUrl: `https://picsum.photos/seed/new-doc-${doctors.length + 1}/200/200`
     };
     setDoctors(prev => [newDoctor, ...prev]);
@@ -106,7 +157,7 @@ export default function DoctorsTable({ initialDoctors }: { initialDoctors: Docto
                 </span>
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-lg">
               <DialogHeader>
                 <DialogTitle>Register New Doctor</DialogTitle>
                 <DialogDescription>Fill in the details to add a new doctor to the system.</DialogDescription>
@@ -124,7 +175,7 @@ export default function DoctorsTable({ initialDoctors }: { initialDoctors: Docto
                 <span className="sr-only">Avatar</span>
               </TableHead>
               <TableHead>Name</TableHead>
-              <TableHead>Specialty</TableHead>
+              <TableHead>Department</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
@@ -145,7 +196,7 @@ export default function DoctorsTable({ initialDoctors }: { initialDoctors: Docto
                   />
                 </TableCell>
                 <TableCell className="font-medium">{doctor.name}</TableCell>
-                <TableCell>{doctor.specialty}</TableCell>
+                <TableCell>{doctor.department}</TableCell>
                 <TableCell>
                   <Badge variant={doctor.status === "Active" ? "default" : "secondary"} className={doctor.status === "Active" ? "bg-green-500/20 text-green-700 border-green-500/20" : ""}>
                     {doctor.status}
