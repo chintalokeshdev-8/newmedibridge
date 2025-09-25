@@ -46,6 +46,14 @@ export type Prescription = {
     notes: string;
 };
 
+export type LabReport = {
+    id: string;
+    testName: string;
+    date: string;
+    status: 'Pending' | 'Completed' | 'Canceled';
+    fileUrl?: string;
+}
+
 export type Patient = {
     id: string;
     name: string;
@@ -54,8 +62,10 @@ export type Patient = {
     bloodGroup: string;
     lastVisit: string;
     primaryDoctorId: string;
+    pin: string;
     activeConditions: string[];
     currentMedications: string[];
     appointments: Appointment[];
     prescriptions: Prescription[];
+    labReports: LabReport[];
 };
