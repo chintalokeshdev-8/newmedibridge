@@ -30,11 +30,13 @@ import {
   Users,
   LogOut,
   User,
+  Calendar,
 } from 'lucide-react';
 
 const navItems = [
   { href: '/doctor/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/doctor/patients', icon: Users, label: 'Patients' },
+  { href: '/doctor/appointments', icon: Calendar, label: 'Appointments' },
 ];
 
 export default function DoctorLayout({ children }: { children: React.ReactNode }) {
