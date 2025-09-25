@@ -17,6 +17,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { FilePlus, User, Heart, Droplet, Calendar, Pill, Lock, FileText, Download, Activity, Pencil } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const PinVerification = ({ onVerify }: { onVerify: (pin: string) => void }) => {
     const [pin, setPin] = useState('');
@@ -69,31 +70,83 @@ const PinVerification = ({ onVerify }: { onVerify: (pin: string) => void }) => {
     );
 };
 
-const EditConditionsDialog = ({ patient, onSave, onOpenChange, open }: { patient: Patient, onSave: (conditions: string[]) => void, open: boolean, onOpenChange: (open: boolean) => void }) => {
-    const [conditions, setConditions] = useState(patient.activeConditions.join('\n'));
+const EditPatientDialog = ({ patient, onSave, onOpenChange, open }: { patient: Patient, onSave: (updatedPatient: Patient) => void, open: boolean, onOpenChange: (open: boolean) => void }) => {
+    const [name, setName] = useState(patient.name);
+    const [age, setAge] = useState(patient.age.toString());
+    const [gender, setGender] = useState<Patient['gender']>(patient.gender);
+    const [bloodGroup, setBloodGroup] = useState(patient.bloodGroup);
+    const [activeConditions, setActiveConditions] = useState(patient.activeConditions.join('\n'));
+    const [currentMedications, setCurrentMedications] = useState(patient.currentMedications.join('\n'));
 
     const handleSave = () => {
-        const updatedConditions = conditions.split('\n').filter(c => c.trim() !== '');
-        onSave(updatedConditions);
+        const updatedPatient: Patient = {
+            ...patient,
+            name,
+            age: parseInt(age, 10),
+            gender,
+            bloodGroup,
+            activeConditions: activeConditions.split('\n').filter(c => c.trim() !== ''),
+            currentMedications: currentMedications.split('\n').filter(m => m.trim() !== ''),
+        };
+        onSave(updatedPatient);
         onOpenChange(false);
     };
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent>
+            <DialogContent className="sm:max-w-2xl">
                 <DialogHeader>
-                    <DialogTitle>Edit Active Conditions for {patient.name}</DialogTitle>
+                    <DialogTitle>Edit Patient Details: {patient.name}</DialogTitle>
                     <DialogDescription>
-                        Update the list of active conditions. Please list one condition per line.
+                        Update the patient's information below.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <Textarea
-                        value={conditions}
-                        onChange={(e) => setConditions(e.target.value)}
-                        placeholder="Condition one..."
-                        className="h-48"
-                    />
+                <div className="grid gap-4 py-4 max-h-[60vh] overflow-y-auto pr-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right">Name</Label>
+                        <Input id="name" value={name} onChange={(e) => setName(e.target.value)} className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="age" className="text-right">Age</Label>
+                        <Input id="age" type="number" value={age} onChange={(e) => setAge(e.target.value)} className="col-span-3" />
+                    </div>
+                     <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="gender" className="text-right">Gender</Label>
+                        <Select onValueChange={(value: Patient['gender']) => setGender(value)} value={gender}>
+                            <SelectTrigger className="col-span-3">
+                                <SelectValue placeholder="Select gender" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="Male">Male</SelectItem>
+                                <SelectItem value="Female">Female</SelectItem>
+                                <SelectItem value="Other">Other</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                     <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="bloodGroup" className="text-right">Blood Group</Label>
+                        <Input id="bloodGroup" value={bloodGroup} onChange={(e) => setBloodGroup(e.target.value)} className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-start gap-4">
+                        <Label htmlFor="conditions" className="text-right pt-2">Active Conditions</Label>
+                        <Textarea
+                            id="conditions"
+                            value={activeConditions}
+                            onChange={(e) => setActiveConditions(e.target.value)}
+                            placeholder="One condition per line..."
+                            className="col-span-3 h-24"
+                        />
+                    </div>
+                     <div className="grid grid-cols-4 items-start gap-4">
+                        <Label htmlFor="medications" className="text-right pt-2">Current Medications</Label>
+                        <Textarea
+                            id="medications"
+                            value={currentMedications}
+                            onChange={(e) => setCurrentMedications(e.target.value)}
+                            placeholder="One medication per line..."
+                            className="col-span-3 h-24"
+                        />
+                    </div>
                 </div>
                 <DialogFooter>
                     <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
@@ -118,7 +171,7 @@ export default function PatientDetailPage() {
 
     const [selectedReport, setSelectedReport] = useState<LabReport | null>(null);
     const [isReportOpen, setReportOpen] = useState(false);
-    const [isEditConditionsOpen, setEditConditionsOpen] = useState(false);
+    const [isEditPatientOpen, setEditPatientOpen] = useState(false);
 
     const doctor = doctors.find(d => d.id === patient?.primaryDoctorId);
 
@@ -162,12 +215,12 @@ export default function PatientDetailPage() {
         setReportOpen(true);
     };
 
-    const handleSaveConditions = (updatedConditions: string[]) => {
+    const handleSavePatient = (updatedPatient: Patient) => {
         if (patient) {
-            setPatient({ ...patient, activeConditions: updatedConditions });
+            setPatient(updatedPatient);
             toast({
-                title: 'Conditions Updated',
-                description: "The patient's active conditions have been saved.",
+                title: 'Patient Details Updated',
+                description: `Information for ${updatedPatient.name} has been saved.`,
             });
         }
     };
@@ -210,13 +263,18 @@ export default function PatientDetailPage() {
                                 <CardDescription>ID: {patient.id} &bull; Last Visit: {patient.lastVisit}</CardDescription>
                             </div>
                         </div>
-                         <div className="flex gap-2 text-sm text-muted-foreground">
-                            <div className="flex items-center gap-1.5 rounded-md border p-2">
-                                <User className="w-4 h-4" /> {patient.age} years, {patient.gender}
+                        <div className='flex items-center gap-2'>
+                             <div className="flex gap-2 text-sm text-muted-foreground">
+                                <div className="flex items-center gap-1.5 rounded-md border p-2">
+                                    <User className="w-4 h-4" /> {patient.age} years, {patient.gender}
+                                </div>
+                                 <div className="flex items-center gap-1.5 rounded-md border p-2">
+                                    <Droplet className="w-4 h-4" /> {patient.bloodGroup}
+                                </div>
                             </div>
-                             <div className="flex items-center gap-1.5 rounded-md border p-2">
-                                <Droplet className="w-4 h-4" /> {patient.bloodGroup}
-                            </div>
+                             <Button onClick={() => setEditPatientOpen(true)}>
+                                <Pencil className="mr-2 h-4 w-4" /> Edit Patient
+                            </Button>
                         </div>
                     </CardHeader>
                     <CardContent>
@@ -260,9 +318,6 @@ export default function PatientDetailPage() {
                                </div>
                                <div className="flex items-center justify-between">
                                 <h3 className="font-semibold text-lg flex items-center gap-2"><Heart className="w-5 h-5 text-primary"/> Active Conditions</h3>
-                                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setEditConditionsOpen(true)}>
-                                    <Pencil className="h-4 w-4" />
-                                </Button>
                                </div>
                                <div className="flex flex-wrap gap-2">
                                    {patient.activeConditions.map(condition => (
@@ -356,15 +411,13 @@ export default function PatientDetailPage() {
                         )}
                     </DialogContent>
                 </Dialog>
-                <EditConditionsDialog 
-                    patient={patient} 
-                    open={isEditConditionsOpen} 
-                    onOpenChange={setEditConditionsOpen} 
-                    onSave={handleSaveConditions} 
+                <EditPatientDialog
+                    patient={patient}
+                    open={isEditPatientOpen}
+                    onOpenChange={setEditPatientOpen}
+                    onSave={handleSavePatient}
                 />
             </main>
         </div>
     );
 }
-
-    
