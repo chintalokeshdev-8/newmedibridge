@@ -2,7 +2,7 @@ export type Doctor = {
   id: string;
   name: string;
   firstName: string;
-  lastName: string;
+  lastName:string;
   email: string;
   phoneNumber?: string;
   medicalCouncilNumber: string;
@@ -37,4 +37,25 @@ export type User = {
   role: 'Admin' | 'Doctor' | 'Lab Staff';
   email: string;
   status: 'Active' | 'Inactive';
+};
+
+export type Prescription = {
+    date: string;
+    medication: string;
+    dosage: string;
+    notes: string;
+};
+
+export type Patient = {
+    id: string;
+    name: string;
+    age: number;
+    gender: 'Male' | 'Female' | 'Other';
+    bloodGroup: string;
+    lastVisit: string;
+    primaryDoctorId: string;
+    activeConditions: string[];
+    currentMedications: string[];
+    appointments: Appointment[];
+    prescriptions: Prescription[];
 };
