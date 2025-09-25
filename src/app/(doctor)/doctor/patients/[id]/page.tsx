@@ -1,9 +1,11 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import PageHeader from "@/components/shared/PageHeader";
 import { patients, doctors } from "@/lib/data";
+import type { LabReport } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -13,7 +15,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { FilePlus, User, Heart, Droplet, Calendar, Pill, Lock, FileText, Download } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
+import { FilePlus, User, Heart, Droplet, Calendar, Pill, Lock, FileText, Download, Activity } from 'lucide-react';
 
 const PinVerification = ({ onVerify }: { onVerify: (pin: string) => void }) => {
     const [pin, setPin] = useState('');
@@ -77,6 +80,9 @@ export default function PatientDetailPage() {
     const [dosage, setDosage] = useState('');
     const [notes, setNotes] = useState('');
 
+    const [selectedReport, setSelectedReport] = useState<LabReport | null>(null);
+    const [isReportOpen, setReportOpen] = useState(false);
+
     const handlePinVerify = (pin: string) => {
         if (patient && patient.pin === pin) {
             setUnlocked(true);
@@ -111,6 +117,11 @@ export default function PatientDetailPage() {
         setDosage('');
         setNotes('');
     }
+
+    const viewReport = (report: LabReport) => {
+        setSelectedReport(report);
+        setReportOpen(true);
+    };
 
     if (!patient || !doctor) {
         return (
@@ -150,7 +161,7 @@ export default function PatientDetailPage() {
                                 <CardDescription>ID: {patient.id} &bull; Last Visit: {patient.lastVisit}</CardDescription>
                             </div>
                         </div>
-                        <div className="flex gap-2 text-sm text-muted-foreground">
+                         <div className="flex gap-2 text-sm text-muted-foreground">
                             <div className="flex items-center gap-1.5 rounded-md border p-2">
                                 <User className="w-4 h-4" /> {patient.age} years, {patient.gender}
                             </div>
@@ -161,8 +172,43 @@ export default function PatientDetailPage() {
                     </CardHeader>
                     <CardContent>
                         <Separator className="my-4" />
+                        <div className="grid gap-6 md:grid-cols-3 mb-6">
+                            <Card>
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                    <CardTitle className="text-sm font-medium">Upcoming Appointments</CardTitle>
+                                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-2xl font-bold">{patient.appointments.filter(a => a.status === 'Scheduled').length}</div>
+                                </CardContent>
+                            </Card>
+                            <Card>
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                    <CardTitle className="text-sm font-medium">Active Conditions</CardTitle>
+                                    <Heart className="h-4 w-4 text-muted-foreground" />
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-2xl font-bold">{patient.activeConditions.length}</div>
+                                </CardContent>
+                            </Card>
+                             <Card>
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                    <CardTitle className="text-sm font-medium">Active Medications</CardTitle>
+                                    <Pill className="h-4 w-4 text-muted-foreground" />
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-2xl font-bold">{patient.currentMedications.length}</div>
+                                </CardContent>
+                            </Card>
+                        </div>
                         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                             <div className="space-y-4">
+                               <h3 className="font-semibold text-lg flex items-center gap-2"><Activity className="w-5 h-5 text-primary"/> Vitals</h3>
+                                <div className="flex flex-wrap gap-2">
+                                   <Badge variant="secondary">Height: 175cm</Badge>
+                                   <Badge variant="secondary">Weight: 78kg</Badge>
+                                   <Badge variant="secondary">BP: 120/80 mmHg</Badge>
+                               </div>
                                <h3 className="font-semibold text-lg flex items-center gap-2"><Heart className="w-5 h-5 text-primary"/> Active Conditions</h3>
                                <div className="flex flex-wrap gap-2">
                                    {patient.activeConditions.map(condition => (
@@ -208,11 +254,9 @@ export default function PatientDetailPage() {
                                             className={report.status === 'Completed' ? 'bg-green-500/20 text-green-700 border-green-500/20' : 'bg-yellow-500/20 text-yellow-700 border-yellow-500/20' }
                                             >{report.status}</Badge>
                                             {report.status === 'Completed' && report.fileUrl && (
-                                                <Button variant="outline" size="sm" asChild>
-                                                    <Link href={report.fileUrl} target="_blank">
-                                                        <Download className="mr-2 h-3 w-3" />
-                                                        View
-                                                    </Link>
+                                                <Button variant="outline" size="sm" onClick={() => viewReport(report)}>
+                                                    <Download className="mr-2 h-3 w-3" />
+                                                    View
                                                 </Button>
                                             )}
                                         </div>
@@ -245,6 +289,19 @@ export default function PatientDetailPage() {
                         </div>
                     </CardContent>
                 </Card>
+                 <Dialog open={isReportOpen} onOpenChange={setReportOpen}>
+                    <DialogContent className="max-w-4xl h-[90vh]">
+                        <DialogHeader>
+                        <DialogTitle>{selectedReport?.testName}</DialogTitle>
+                        <DialogDescription>Date: {selectedReport?.date}</DialogDescription>
+                        </DialogHeader>
+                        {selectedReport?.fileUrl && (
+                             <div className="relative h-full">
+                                <Image src={selectedReport.fileUrl} layout="fill" objectFit="contain" alt="Lab Report" />
+                            </div>
+                        )}
+                    </DialogContent>
+                </Dialog>
             </main>
         </div>
     );

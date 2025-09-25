@@ -49,8 +49,8 @@ export const patients: Patient[] = [
             { date: '2024-07-10', medication: 'Lisinopril 10mg', dosage: '1 tablet daily', notes: 'Monitor blood pressure.' }
         ],
         labReports: [
-            { id: 'R001', testName: 'Complete Blood Count', date: '2024-08-10', status: 'Completed', fileUrl: '#' },
-            { id: 'R002', testName: 'Lipid Panel', date: '2024-08-10', status: 'Completed', fileUrl: '#' },
+            { id: 'R001', testName: 'Complete Blood Count', date: '2024-08-10', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report1/800/1100' },
+            { id: 'R002', testName: 'Lipid Panel', date: '2024-08-10', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report2/800/1100' },
             { id: 'R003', testName: 'HbA1c', date: '2024-08-12', status: 'Pending' },
         ]
     },
@@ -72,8 +72,8 @@ export const patients: Patient[] = [
             { date: '2024-08-01', medication: 'Sumatriptan 50mg', dosage: 'As needed for migraine', notes: 'Do not exceed 2 doses in 24 hours.' }
         ],
         labReports: [
-            { id: 'R004', testName: 'Brain MRI', date: '2024-07-20', status: 'Completed', fileUrl: '#' },
-            { id: 'R005', testName: 'TSH', date: '2024-08-05', status: 'Completed', fileUrl: '#' }
+            { id: 'R004', testName: 'Brain MRI', date: '2024-07-20', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report3/800/1100' },
+            { id: 'R005', testName: 'TSH', date: '2024-08-05', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report4/800/1100' }
         ]
     }
 ];
