@@ -30,6 +30,23 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { useToast } from "@/hooks/use-toast";
 import { ScrollArea } from "../ui/scroll-area";
 
+const departments = [
+  "Cardiology",
+  "Neurology",
+  "Pediatrics",
+  "Orthopedics",
+  "Oncology",
+  "Dermatology",
+  "Gastroenterology",
+  "Endocrinology",
+  "Pulmonology",
+  "Urology",
+  "Ophthalmology",
+  "ENT (Otolaryngology)",
+  "General Surgery",
+  "Psychiatry"
+];
+
 const DoctorForm = ({ onSave }: { onSave: (doctor: Omit<Doctor, 'id' | 'avatarUrl' | 'name'>) => void }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -83,8 +100,17 @@ const DoctorForm = ({ onSave }: { onSave: (doctor: Omit<Doctor, 'id' | 'avatarUr
           <Input id="medicalCouncilNumber" value={medicalCouncilNumber} onChange={(e) => setMedicalCouncilNumber(e.target.value)} className="col-span-3" placeholder="MCI12345" required />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="department" className="text-right">Department</Label>
-          <Input id="department" value={department} onChange={(e) => setDepartment(e.target.value)} className="col-span-3" placeholder="Cardiology" required />
+            <Label htmlFor="department" className="text-right">Department</Label>
+            <Select onValueChange={setDepartment} value={department}>
+                <SelectTrigger className="col-span-3">
+                    <SelectValue placeholder="Select a department" />
+                </SelectTrigger>
+                <SelectContent>
+                    {departments.map(dept => (
+                        <SelectItem key={dept} value={dept}>{dept}</SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
         </div>
          <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="hospitalName" className="text-right">Hospital</Label>
