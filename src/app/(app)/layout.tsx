@@ -78,7 +78,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 </Avatar>
                 <div className="text-left">
                   <p className="text-sm font-medium">Admin User</p>
-                  <p className="text-xs text-muted-foreground">admin@meditrack.pro</p>
+                  <p className="text-xs text-muted-foreground">admin@medibridge.app</p>
                 </div>
               </Button>
             </DropdownMenuTrigger>
@@ -87,7 +87,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <div className="flex flex-col space-y-1">
                   <p className="text-sm font-medium leading-none">Admin</p>
                   <p className="text-xs leading-none text-muted-foreground">
-                    admin@meditrack.pro
+                    admin@medibridge.app
                   </p>
                 </div>
               </DropdownMenuLabel>

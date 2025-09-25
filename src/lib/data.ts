@@ -1,11 +1,11 @@
 import type { Doctor, Lab, Appointment, User } from './types';
 
 export const doctors: Doctor[] = [
-  { id: 'D001', name: 'Dr. Emily Carter', firstName: 'Emily', lastName: 'Carter', email: 'emily.carter@meditrack.pro', medicalCouncilNumber: 'MCI12345', department: 'Cardiology', successfulSurgeries: 150, mainFocus: 'Interventional Cardiology', hospitalName: 'City General Hospital', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc1/200/200' },
-  { id: 'D002', name: 'Dr. Ben Adams', firstName: 'Ben', lastName: 'Adams', email: 'ben.adams@meditrack.pro', medicalCouncilNumber: 'MCI67890', department: 'Neurology', successfulSurgeries: 80, mainFocus: 'Epilepsy', hospitalName: 'City General Hospital', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc2/200/200' },
-  { id: 'D003', name: 'Dr. Chloe Taylor', firstName: 'Chloe', lastName: 'Taylor', email: 'chloe.taylor@meditrack.pro', medicalCouncilNumber: 'MCI13579', department: 'Pediatrics', successfulSurgeries: 200, mainFocus: 'Neonatology', hospitalName: 'Sunrise Children\'s Hospital', status: 'Inactive', avatarUrl: 'https://picsum.photos/seed/doc3/200/200' },
-  { id: 'D004', name: 'Dr. Marcus Chen', firstName: 'Marcus', lastName: 'Chen', email: 'marcus.chen@meditrack.pro', medicalCouncilNumber: 'MCI24680', department: 'Orthopedics', successfulSurgeries: 120, mainFocus: 'Spine Surgery', hospitalName: 'City General Hospital', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc4/200/200' },
-  { id: 'D005', name: 'Dr. Sofia Garcia', firstName: 'Sofia', lastName: 'Garcia', email: 'sofia.garcia@meditrack.pro', medicalCouncilNumber: 'MCI98765', department: 'Cardiology', successfulSurgeries: 95, mainFocus: 'Heart Failure', hospitalName: 'City General Hospital', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc5/200/200' },
+  { id: 'D001', name: 'Dr. Emily Carter', firstName: 'Emily', lastName: 'Carter', email: 'emily.carter@medibridge.app', medicalCouncilNumber: 'MCI12345', department: 'Cardiology', successfulSurgeries: 150, mainFocus: 'Interventional Cardiology', hospitalName: 'City General Hospital', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc1/200/200' },
+  { id: 'D002', name: 'Dr. Ben Adams', firstName: 'Ben', lastName: 'Adams', email: 'ben.adams@medibridge.app', medicalCouncilNumber: 'MCI67890', department: 'Neurology', successfulSurgeries: 80, mainFocus: 'Epilepsy', hospitalName: 'City General Hospital', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc2/200/200' },
+  { id: 'D003', name: 'Dr. Chloe Taylor', firstName: 'Chloe', lastName: 'Taylor', email: 'chloe.taylor@medibridge.app', medicalCouncilNumber: 'MCI13579', department: 'Pediatrics', successfulSurgeries: 200, mainFocus: 'Neonatology', hospitalName: 'Sunrise Children\'s Hospital', status: 'Inactive', avatarUrl: 'https://picsum.photos/seed/doc3/200/200' },
+  { id: 'D004', name: 'Dr. Marcus Chen', firstName: 'Marcus', lastName: 'Chen', email: 'marcus.chen@medibridge.app', medicalCouncilNumber: 'MCI24680', department: 'Orthopedics', successfulSurgeries: 120, mainFocus: 'Spine Surgery', hospitalName: 'City General Hospital', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc4/200/200' },
+  { id: 'D005', name: 'Dr. Sofia Garcia', firstName: 'Sofia', lastName: 'Garcia', email: 'sofia.garcia@medibridge.app', medicalCouncilNumber: 'MCI98765', department: 'Cardiology', successfulSurgeries: 95, mainFocus: 'Heart Failure', hospitalName: 'City General Hospital', status: 'Active', avatarUrl: 'https://picsum.photos/seed/doc5/200/200' },
 ];
 
 export const labs: Lab[] = [
@@ -24,8 +24,8 @@ export const appointments: Appointment[] = [
 ];
 
 export const users: User[] = [
-  { id: 'U001', name: 'Admin User', role: 'Admin', email: 'admin@meditrack.pro', status: 'Active' },
-  { id: 'U002', name: 'Dr. Emily Carter', role: 'Doctor', email: 'emily.carter@meditrack.pro', status: 'Active' },
-  { id: 'U003', name: 'Lab Tech', role: 'Lab Staff', email: 'lab.tech@meditrack.pro', status: 'Active' },
-  { id: 'U004', name: 'Dr. Ben Adams', role: 'Doctor', email: 'ben.adams@meditrack.pro', status: 'Inactive' },
+  { id: 'U001', name: 'Admin User', role: 'Admin', email: 'admin@medibridge.app', status: 'Active' },
+  { id: 'U002', name: 'Dr. Emily Carter', role: 'Doctor', email: 'emily.carter@medibridge.app', status: 'Active' },
+  { id: 'U003', name: 'Lab Tech', role: 'Lab Staff', email: 'lab.tech@medibridge.app', status: 'Active' },
+  { id: 'U004', name: 'Dr. Ben Adams', role: 'Doctor', email: 'ben.adams@medibridge.app', status: 'Inactive' },
 ];

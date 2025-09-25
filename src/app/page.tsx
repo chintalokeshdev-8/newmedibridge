@@ -13,7 +13,7 @@ export default function LoginPage() {
           <div className="mb-4 flex justify-center">
             <AppLogo />
           </div>
-          <CardTitle className="text-2xl font-headline">Welcome to MediTrack Pro</CardTitle>
+          <CardTitle className="text-2xl font-headline">Welcome to Medibridge</CardTitle>
           <CardDescription>Enter your credentials to access the admin panel</CardDescription>
         </CardHeader>
         <CardContent>

@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'MediTrack Pro',
+  title: 'Medibridge',
   description: 'Hospital Administration Panel',
 };
 

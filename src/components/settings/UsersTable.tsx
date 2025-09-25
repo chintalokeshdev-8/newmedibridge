@@ -48,7 +48,7 @@ const UserForm = ({ onSave }: { onSave: (user: Omit<User, 'id'>) => void }) => {
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="email" className="text-right">Email</Label>
-          <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="col-span-3" placeholder="john.doe@meditrack.pro" required />
+          <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="col-span-3" placeholder="john.doe@medibridge.app" required />
         </div>
          <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="role" className="text-right">Role</Label>
@@ -103,8 +103,8 @@ export default function UsersTable({ initialUsers }: { initialUsers: User[] }) {
 
   const generateDummies = () => {
     const dummyUsers: User[] = [
-        { id: `U${String(users.length + 1).padStart(3, '0')}`, name: 'Dummy Doctor One', role: 'Doctor', email: 'dummy.doc1@meditrack.pro', status: 'Active' },
-        { id: `U${String(users.length + 2).padStart(3, '0')}`, name: 'Dummy Lab Staff', role: 'Lab Staff', email: 'dummy.lab1@meditrack.pro', status: 'Active' },
+        { id: `U${String(users.length + 1).padStart(3, '0')}`, name: 'Dummy Doctor One', role: 'Doctor', email: 'dummy.doc1@medibridge.app', status: 'Active' },
+        { id: `U${String(users.length + 2).padStart(3, '0')}`, name: 'Dummy Lab Staff', role: 'Lab Staff', email: 'dummy.lab1@medibridge.app', status: 'Active' },
     ];
     setUsers(prev => [...dummyUsers, ...prev]);
     toast({
