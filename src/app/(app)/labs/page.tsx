@@ -1,0 +1,14 @@
+import PageHeader from "@/components/shared/PageHeader";
+import LabsTable from "@/components/labs/LabsTable";
+import { labs } from "@/lib/data";
+
+export default function LabsPage() {
+  return (
+    <div className="flex flex-1 flex-col">
+      <PageHeader title="Lab Management" />
+      <main className="flex-1 p-4 md:p-6">
+        <LabsTable initialLabs={labs} />
+      </main>
+    </div>
+  );
+}
