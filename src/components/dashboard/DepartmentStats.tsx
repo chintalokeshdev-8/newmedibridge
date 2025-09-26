@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import type { Doctor } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Stethoscope, Users, BriefcaseMedical } from "lucide-react";
+import { Stethoscope, Users, BriefcaseMedical, PlusCircle } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '../ui/button';
 
 type DepartmentStatsProps = {
   doctors: Doctor[];
@@ -40,6 +41,10 @@ export default function DepartmentStats({ doctors }: DepartmentStatsProps) {
                     ))}
                 </SelectContent>
             </Select>
+            <Button size="sm" variant="outline">
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Add New Department
+            </Button>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
