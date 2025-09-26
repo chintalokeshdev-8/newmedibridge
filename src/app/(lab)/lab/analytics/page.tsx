@@ -1,83 +1,154 @@
 'use client';
+import { useState } from 'react';
 import PageHeader from "@/components/shared/PageHeader";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { patients } from "@/lib/data";
-import { Clock, CheckCircle, BarChart2, DollarSign } from 'lucide-react';
+import { Clock, CheckCircle, BarChart2, DollarSign, Users } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { isWithinInterval, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, parseISO } from 'date-fns';
+import type { LabReport } from '@/lib/types';
+
+type TimeFilter = 'today' | 'weekly' | 'monthly';
+
+type AnalyticsData = {
+    completed: number;
+    pending: number;
+    revenue: number;
+    patientsServed: number;
+};
+
+const filterReports = (reports: { report: LabReport, patientId: string }[], filter: TimeFilter): { report: LabReport, patientId: string }[] => {
+    const now = new Date();
+    let interval: Interval;
+
+    switch (filter) {
+        case 'today':
+            const todayStart = new Date(now.setHours(0, 0, 0, 0));
+            const todayEnd = new Date(now.setHours(23, 59, 59, 999));
+            interval = { start: todayStart, end: todayEnd };
+            break;
+        case 'weekly':
+            interval = { start: startOfWeek(now), end: endOfWeek(now) };
+            break;
+        case 'monthly':
+            interval = { start: startOfMonth(now), end: endOfMonth(now) };
+            break;
+        default:
+            return reports;
+    }
+
+    return reports.filter(({ report }) => {
+        try {
+            const reportDate = parseISO(report.date);
+            return isWithinInterval(reportDate, interval);
+        } catch (e) {
+            return false;
+        }
+    });
+};
+
+const calculateAnalytics = (reports: { report: LabReport, patientId: string }[]): AnalyticsData => {
+    const completed = reports.filter(r => r.report.status === 'Completed').length;
+    const pending = reports.filter(r => r.report.status === 'Pending').length;
+    const revenue = reports
+        .filter(r => r.report.paymentStatus === 'Paid' && r.report.amountPaid && r.report.status === 'Completed')
+        .reduce((sum, item) => sum + (item.report.amountPaid || 0), 0);
+    const patientsServed = new Set(reports.map(r => r.patientId)).size;
+
+    return { completed, pending, revenue, patientsServed };
+};
+
 
 export default function LabAnalyticsPage() {
-    const today = new Date().toISOString().split('T')[0];
-
-    const allReports = patients.flatMap(p => p.labReports);
-
-    const completedToday = allReports
-        .filter(r => r.status === 'Completed' && r.date === today).length;
-
-    const totalPending = allReports
-        .filter(r => r.status === 'Pending').length;
+    const [filter, setFilter] = useState<TimeFilter>('today');
     
-    const totalRevenue = allReports
-        .filter(r => r.paymentStatus === 'Paid' && r.amountPaid)
-        .reduce((sum, report) => sum + (report.amountPaid || 0), 0);
+    const allReports = patients.flatMap(p => p.labReports.map(report => ({ report, patientId: p.id })));
+    const filtered = filterReports(allReports, filter);
+    const analytics = calculateAnalytics(filtered);
+
+    const filterLabels = {
+        today: "Today's",
+        weekly: "This Week's",
+        monthly: "This Month's"
+    };
+
+    const periodLabels = {
+        today: "today",
+        weekly: "this week",
+        monthly: "this month"
+    }
 
 
   return (
     <div className="flex flex-1 flex-col">
       <PageHeader title="Lab Analytics" />
       <main className="flex-1 space-y-6 p-4 md:p-6">
+
+        <Tabs defaultValue="today" onValueChange={(value) => setFilter(value as TimeFilter)} className="w-full">
+            <TabsList className="grid w-full max-w-md grid-cols-3">
+              <TabsTrigger value="today">Today</TabsTrigger>
+              <TabsTrigger value="weekly">This Week</TabsTrigger>
+              <TabsTrigger value="monthly">This Month</TabsTrigger>
+            </TabsList>
+            <TabsContent value="today" />
+            <TabsContent value="weekly" />
+            <TabsContent value="monthly" />
+        </Tabs>
+
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <Card className="hover:bg-muted/50 cursor-pointer transition-colors">
+            <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Tests Completed Today</CardTitle>
+                    <CardTitle className="text-sm font-medium">{filterLabels[filter]} Completed Reports</CardTitle>
                     <CheckCircle className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-4xl font-bold">{completedToday}</div>
+                    <div className="text-4xl font-bold">{analytics.completed}</div>
                     <p className="text-xs text-muted-foreground">
-                        Number of lab reports completed on {today}
+                        Reports completed {periodLabels[filter]}
                     </p>
                 </CardContent>
             </Card>
-            <Card className="hover:bg-muted/50 cursor-pointer transition-colors">
+            <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Overall Pending Reports</CardTitle>
-                    <Clock className="h-5 w-5 text-muted-foreground" />
+                    <CardTitle className="text-sm font-medium">{filterLabels[filter]} Patients Served</CardTitle>
+                    <Users className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-4xl font-bold">{totalPending}</div>
+                    <div className="text-4xl font-bold">{analytics.patientsServed}</div>
                      <p className="text-xs text-muted-foreground">
-                        Total reports awaiting processing
+                        Unique patients {periodLabels[filter]}
                     </p>
                 </CardContent>
             </Card>
-             <Card className="hover:bg-muted/50 cursor-pointer transition-colors bg-primary text-primary-foreground">
+             <Card className="bg-primary text-primary-foreground">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+                    <CardTitle className="text-sm font-medium">{filterLabels[filter]} Revenue</CardTitle>
                     <DollarSign className="h-5 w-5 text-primary-foreground/80" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-4xl font-extrabold">${totalRevenue.toLocaleString()}</div>
+                    <div className="text-4xl font-extrabold">${analytics.revenue.toLocaleString()}</div>
                      <p className="text-xs text-primary-foreground/80">
-                        From all completed & paid tests
+                        From paid tests {periodLabels[filter]}
                     </p>
                 </CardContent>
             </Card>
-             <Card className="hover:bg-muted/50 cursor-pointer transition-colors">
+             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Coming Soon</CardTitle>
-                    <BarChart2 className="h-5 w-5 text-muted-foreground" />
+                    <CardTitle className="text-sm font-medium">{filterLabels[filter]} Pending Reports</CardTitle>
+                    <Clock className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">More Analytics</div>
+                    <div className="text-4xl font-bold">{analytics.pending}</div>
                      <p className="text-xs text-muted-foreground">
-                        Detailed charts and trends are on the way.
+                        New reports registered {periodLabels[filter]}
                     </p>
                 </CardContent>
             </Card>
         </div>
         <Card>
             <CardHeader>
-                <CardTitle>Analytics Overview</CardTitle>
-                <CardDescription>More detailed analytics will be displayed here in a future update.</CardDescription>
+                <CardTitle>Coming Soon</CardTitle>
+                <CardDescription>More detailed charts and breakdowns will be displayed here in a future update.</CardDescription>
             </CardHeader>
             <CardContent className="h-64 flex items-center justify-center">
                 <p className="text-muted-foreground">Analytics charts coming soon...</p>
