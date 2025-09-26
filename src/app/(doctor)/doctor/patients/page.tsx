@@ -7,7 +7,7 @@ import { patients as initialPatients } from "@/lib/data";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Search, UserPlus } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 export default function PatientsPage() {
