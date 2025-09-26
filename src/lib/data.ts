@@ -52,9 +52,9 @@ export const patients: Patient[] = [
             { date: '2024-07-10', medication: 'Lisinopril 10mg', dosage: '1 tablet daily', notes: 'Monitor blood pressure.' }
         ],
         labReports: [
-            { id: 'R001', testName: 'Complete Blood Count', date: '2024-08-10', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report1/800/1100', amount: 50, amountPaid: 50, paymentStatus: 'Paid' },
-            { id: 'R002', testName: 'Lipid Panel', date: '2024-08-10', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report2/800/1100', amount: 75, amountPaid: 75, paymentStatus: 'Paid' },
-            { id: 'R003', testName: 'HbA1c', date: '2024-08-12', status: 'Pending', amount: 60, amountPaid: 0, paymentStatus: 'Pending' },
+            { id: 'R001', testName: 'Complete Blood Count', date: '2024-08-10', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report1/800/1100', amount: 50, amountPaid: 50, paymentStatus: 'Paid', bookingSource: 'Internal' },
+            { id: 'R002', testName: 'Lipid Panel', date: '2024-08-10', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report2/800/1100', amount: 75, amountPaid: 75, paymentStatus: 'Paid', bookingSource: 'Internal' },
+            { id: 'R003', testName: 'HbA1c', date: '2024-08-12', status: 'Pending', amount: 60, amountPaid: 0, paymentStatus: 'Pending', bookingSource: 'Internal' },
         ]
     },
     {
@@ -75,9 +75,9 @@ export const patients: Patient[] = [
             { date: '2024-08-01', medication: 'Sumatriptan 50mg', dosage: 'As needed for migraine', notes: 'Do not exceed 2 doses in 24 hours.' }
         ],
         labReports: [
-            { id: 'R004', testName: 'Brain MRI', date: '2024-07-20', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report3/800/1100', amount: 500, amountPaid: 500, paymentStatus: 'Paid' },
-            { id: 'R005', testName: 'TSH', date: '2024-08-05', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report4/800/1100', amount: 40, amountPaid: 20, paymentStatus: 'Partial' },
-            { id: 'R006', testName: 'Vitamin D Level', date: '2024-08-14', status: 'Pending', amount: 45, amountPaid: 0, paymentStatus: 'Pending' },
+            { id: 'R004', testName: 'Brain MRI', date: '2024-07-20', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report3/800/1100', amount: 500, amountPaid: 500, paymentStatus: 'Paid', bookingSource: 'Internal' },
+            { id: 'R005', testName: 'TSH', date: '2024-08-05', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report4/800/1100', amount: 40, amountPaid: 20, paymentStatus: 'Partial', bookingSource: 'Online' },
+            { id: 'R006', testName: 'Vitamin D Level', date: '2024-08-14', status: 'Pending', amount: 45, amountPaid: 0, paymentStatus: 'Pending', bookingSource: 'Online' },
         ]
     },
     {
@@ -96,8 +96,8 @@ export const patients: Patient[] = [
         ],
         prescriptions: [],
         labReports: [
-            { id: 'R007', testName: 'Echocardiogram', date: '2024-08-10', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report5/800/1100', amount: 250, amountPaid: 250, paymentStatus: 'Paid' },
-            { id: 'R008', testName: 'Troponin-I', date: '2024-08-18', status: 'Pending', amount: 80, amountPaid: 80, paymentStatus: 'Paid' },
+            { id: 'R007', testName: 'Echocardiogram', date: '2024-08-10', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report5/800/1100', amount: 250, amountPaid: 250, paymentStatus: 'Paid', bookingSource: 'Internal' },
+            { id: 'R008', testName: 'Troponin-I', date: '2024-08-18', status: 'Pending', amount: 80, amountPaid: 80, paymentStatus: 'Paid', bookingSource: 'Internal' },
         ]
     },
     {
@@ -116,7 +116,7 @@ export const patients: Patient[] = [
         ],
         prescriptions: [],
         labReports: [
-             { id: 'R009', testName: 'DaTscan', date: '2024-08-11', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report6/800/1100', amount: 1200, amountPaid: 1200, paymentStatus: 'Paid' }
+             { id: 'R009', testName: 'DaTscan', date: '2024-08-11', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report6/800/1100', amount: 1200, amountPaid: 1200, paymentStatus: 'Paid', bookingSource: 'Internal' }
         ]
     },
     {
@@ -133,7 +133,7 @@ export const patients: Patient[] = [
         appointments: [],
         prescriptions: [],
         labReports: [
-            { id: 'R010', testName: 'Knee X-Ray', date: '2024-08-14', status: 'Pending', amount: 120, amountPaid: 0, paymentStatus: 'Pending' },
+            { id: 'R010', testName: 'Knee X-Ray', date: '2024-08-14', status: 'Pending', amount: 120, amountPaid: 0, paymentStatus: 'Pending', bookingSource: 'Online' },
         ]
     },
      {
@@ -150,8 +150,8 @@ export const patients: Patient[] = [
         appointments: [],
         prescriptions: [],
         labReports: [
-            { id: 'R011', testName: 'INR', date: new Date().toISOString().split('T')[0], status: 'Completed', fileUrl: 'https://picsum.photos/seed/report7/800/1100', amount: 30, amountPaid: 30, paymentStatus: 'Paid' },
-            { id: 'R012', testName: 'ECG', date: '2024-08-19', status: 'Pending', amount: 150, amountPaid: 150, paymentStatus: 'Paid' },
+            { id: 'R011', testName: 'INR', date: new Date().toISOString().split('T')[0], status: 'Completed', fileUrl: 'https://picsum.photos/seed/report7/800/1100', amount: 30, amountPaid: 30, paymentStatus: 'Paid', bookingSource: 'Internal' },
+            { id: 'R012', testName: 'ECG', date: '2024-08-19', status: 'Pending', amount: 150, amountPaid: 150, paymentStatus: 'Paid', bookingSource: 'Online' },
         ]
     },
     {
@@ -168,7 +168,7 @@ export const patients: Patient[] = [
         appointments: [],
         prescriptions: [],
         labReports: [
-            { id: 'R013', testName: 'Knee MRI', date: new Date().toISOString().split('T')[0], status: 'Completed', fileUrl: 'https://picsum.photos/seed/report8/800/1100', amount: 600, amountPaid: 600, paymentStatus: 'Paid' }
+            { id: 'R013', testName: 'Knee MRI', date: new Date().toISOString().split('T')[0], status: 'Completed', fileUrl: 'https://picsum.photos/seed/report8/800/1100', amount: 600, amountPaid: 600, paymentStatus: 'Paid', bookingSource: 'Online' }
         ]
     }
 ];

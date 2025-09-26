@@ -51,6 +51,7 @@ export type LabReport = {
     testName: string;
     date: string;
     status: 'Pending' | 'Completed' | 'Canceled';
+    bookingSource?: 'Online' | 'Internal';
     fileUrl?: string;
     amount?: number;
     amountPaid?: number;
