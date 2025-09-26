@@ -103,7 +103,7 @@ export default function PatientsPage() {
                       )}
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="outline" size="sm" asChild>
+                      <Button size="sm" asChild>
                         <Link href={`/doctor/patients/${patient.id}`}>
                           View Details
                           <ArrowRight className="ml-2 h-4 w-4" />
