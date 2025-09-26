@@ -8,7 +8,7 @@ import type { Patient } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, UserPlus } from 'lucide-react';
+import { Search, UserPlus, Share } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
@@ -92,6 +92,15 @@ export default function DoctorDashboardPage() {
         patient.id.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const handleShareLink = () => {
+        const url = `${window.location.origin}/register`;
+        navigator.clipboard.writeText(url);
+        toast({
+            title: 'Registration Link Copied!',
+            description: 'You can now share this link with patients to allow them to register.',
+        });
+    };
+
     const handleSavePatient = (newPatientData: Omit<Patient, 'id' | 'primaryDoctorId' | 'appointments' | 'prescriptions' | 'labReports'>) => {
         const newPatient: Patient = {
             ...newPatientData,
@@ -116,7 +125,7 @@ export default function DoctorDashboardPage() {
                 <Card>
                     <CardHeader>
                         <CardTitle>Patient Directory & Registration</CardTitle>
-                        <CardDescription>Search for existing patients or register a new one.</CardDescription>
+                        <CardDescription>Search for existing patients, register a new one, or share a registration link.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div className="flex items-center gap-4 mb-6">
@@ -130,6 +139,9 @@ export default function DoctorDashboardPage() {
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                             </div>
+                            <Button variant="outline" onClick={handleShareLink}>
+                                <Share className="mr-2 h-4 w-4" /> Share Link
+                            </Button>
                             <Button onClick={() => setRegistering(true)}>
                                 <UserPlus className="mr-2 h-4 w-4" /> Register Patient
                             </Button>
