@@ -73,7 +73,7 @@ export const patients: Patient[] = [
         bloodGroup: 'A-',
         lastVisit: '2024-07-12', // Corrected last visit
         primaryDoctorId: 'D002',
-        pin: '5678',
+        pin: '1234',
         activeConditions: ['Migraine'],
         currentMedications: ['Sumatriptan'],
         appointments: [
@@ -97,7 +97,7 @@ export const patients: Patient[] = [
         bloodGroup: 'B+',
         lastVisit: '2024-07-18', // Corrected last visit
         primaryDoctorId: 'D005',
-        pin: '1122',
+        pin: '1234',
         activeConditions: ['Coronary Artery Disease'],
         currentMedications: ['Aspirin', 'Atorvastatin'],
         appointments: [
@@ -118,7 +118,7 @@ export const patients: Patient[] = [
         bloodGroup: 'AB+',
         lastVisit: '2024-08-01', // Example last visit
         primaryDoctorId: 'D002',
-        pin: '3344',
+        pin: '1234',
         activeConditions: ['Parkinson\'s Disease'],
         currentMedications: ['Levodopa'],
         appointments: [
@@ -138,7 +138,7 @@ export const patients: Patient[] = [
         bloodGroup: 'A+',
         lastVisit: '2024-07-25', // Example last visit
         primaryDoctorId: 'D004',
-        pin: '5566',
+        pin: '1234',
         activeConditions: ['Osteoarthritis'],
         currentMedications: ['NSAIDs'],
         appointments: [],
@@ -156,7 +156,7 @@ export const patients: Patient[] = [
         bloodGroup: 'O-',
         lastVisit: '2024-08-05',
         primaryDoctorId: 'D001',
-        pin: '7788',
+        pin: '1234',
         activeConditions: ['Atrial Fibrillation'],
         currentMedications: ['Warfarin'],
         appointments: [],
@@ -175,7 +175,7 @@ export const patients: Patient[] = [
         bloodGroup: 'B-',
         lastVisit: '2024-08-02',
         primaryDoctorId: 'D004',
-        pin: '9900',
+        pin: '1234',
         activeConditions: ['ACL Tear'],
         currentMedications: [],
         appointments: [],
