@@ -60,6 +60,7 @@ export type Patient = {
     age: number;
     gender: 'Male' | 'Female' | 'Other';
     bloodGroup: string;
+    phoneNumber?: string;
     lastVisit: string;
     primaryDoctorId: string;
     pin: string;
