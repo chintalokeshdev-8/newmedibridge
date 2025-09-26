@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -29,10 +30,14 @@ import {
   LogOut,
   User,
   TestTube,
+  BarChart2,
+  BookCheck,
 } from 'lucide-react';
 
 const navItems = [
   { href: '/lab/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  { href: '/lab/analytics', icon: BarChart2, label: 'Analytics' },
+  { href: '/lab/bookings', icon: BookCheck, label: 'Online Bookings' },
 ];
 
 export default function LabLayout({ children }: { children: React.ReactNode }) {

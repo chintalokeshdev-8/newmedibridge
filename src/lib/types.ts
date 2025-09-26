@@ -52,6 +52,9 @@ export type LabReport = {
     date: string;
     status: 'Pending' | 'Completed' | 'Canceled';
     fileUrl?: string;
+    amount?: number;
+    amountPaid?: number;
+    paymentStatus?: 'Paid' | 'Pending' | 'Partial';
 }
 
 export type Patient = {
