@@ -8,80 +8,11 @@ import type { Patient, Doctor } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, UserPlus, Share, Award, Stethoscope, Pencil, MapPin, Phone, Globe, Share2, Map } from 'lucide-react';
+import { Search, UserPlus, Share } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Separator } from '@/components/ui/separator';
-
-
-const DoctorProfileCard = ({ doctor }: { doctor: Doctor }) => {
-    return (
-        <Card>
-            <CardContent className="p-6">
-                <div className="flex flex-col md:flex-row items-center gap-6">
-                    <Avatar className="h-24 w-24 border-4 border-primary/20">
-                        <AvatarImage src={doctor.avatarUrl} alt={doctor.name} data-ai-hint="doctor person" />
-                        <AvatarFallback>{doctor.firstName.charAt(0)}{doctor.lastName.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 text-center md:text-left">
-                        <div className='flex items-center justify-center md:justify-between'>
-                            <div>
-                                <h2 className="text-2xl font-bold">{doctor.name}</h2>
-                                <p className="text-primary font-medium">{doctor.department}</p>
-                            </div>
-                            <Button variant="outline" size="sm">
-                                <Pencil className="mr-2 h-4 w-4" /> Edit Profile
-                            </Button>
-                        </div>
-
-                        <Separator className="my-3" />
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm text-muted-foreground">
-                            <div className="flex items-center gap-2">
-                                <Award className="w-4 h-4 text-primary" />
-                                <span className='font-semibold text-foreground'>Successful Surgeries:</span> {doctor.successfulSurgeries}+
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Stethoscope className="w-4 h-4 text-primary" />
-                                 <span className='font-semibold text-foreground'>Main Focus:</span> {doctor.mainFocus}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                 <Separator className="my-4" />
-                 <div>
-                    <h3 className="text-lg font-bold">{doctor.hospitalName}</h3>
-                    <div className="space-y-2 mt-2 text-muted-foreground">
-                        <div className="flex items-center gap-3">
-                            <MapPin className="w-4 h-4" />
-                            <span>Kothapet, Guntur, Andhra Pradesh 522001</span>
-                        </div>
-                         <div className="flex items-center gap-3">
-                            <Phone className="w-4 h-4" />
-                            <span>{doctor.phoneNumber || '8008334948'}</span>
-                        </div>
-                         <div className="flex items-center gap-3">
-                            <Globe className="w-4 h-4" />
-                            <a href="#" className="text-primary hover:underline">Visit Website</a>
-                        </div>
-                    </div>
-                    <div className='flex items-center gap-2 mt-4'>
-                        <Button variant="outline" size="sm">
-                            <Share2 className="mr-2 h-4 w-4" /> Share Directions
-                        </Button>
-                        <Button variant="outline" size="sm">
-                            <Map className="mr-2 h-4 w-4" /> View Location
-                        </Button>
-                    </div>
-                 </div>
-            </CardContent>
-        </Card>
-    );
-};
-
 
 const PatientRegistrationForm = ({ onSave, open, onOpenChange }: { onSave: (patient: Omit<Patient, 'id' | 'primaryDoctorId' | 'appointments' | 'prescriptions' | 'labReports'>) => void, open: boolean, onOpenChange: (open: boolean) => void }) => {
     const [name, setName] = useState('');
@@ -198,9 +129,6 @@ export default function DoctorDashboardPage() {
         <div className="flex flex-1 flex-col">
             <PageHeader title="Referral Patients" />
             <main className="flex-1 space-y-6 p-4 md:p-6">
-
-                <DoctorProfileCard doctor={loggedInDoctor} />
-
                 <Card>
                     <CardHeader>
                         <CardTitle>Patient Directory & Registration</CardTitle>
