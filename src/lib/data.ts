@@ -21,6 +21,8 @@ export const appointments: Appointment[] = [
   { id: 'A003', patientName: 'Peter Jones', doctor: { name: 'Dr. Marcus Chen', department: 'Orthopedics' }, date: '2024-08-16', time: '09:00 AM', status: 'Completed' },
   { id: 'A004', patientName: 'Mary Williams', doctor: { name: 'Dr. Emily Carter', department: 'Cardiology' }, date: '2024-08-16', time: '02:00 PM', status: 'Canceled' },
   { id: 'A005', patientName: 'David Brown', doctor: { name: 'Dr. Chloe Taylor', department: 'Pediatrics' }, date: '2024-08-17', time: '03:00 PM', status: 'Scheduled' },
+  { id: 'A006', patientName: 'Lokesh Babu', doctor: { name: 'Dr. Sofia Garcia', department: 'Cardiology' }, date: '2024-08-18', time: '10:00 AM', status: 'Scheduled' },
+  { id: 'A007', patientName: 'Ashok Kumar', doctor: { name: 'Dr. Ben Adams', department: 'Neurology' }, date: '2024-08-18', time: '11:00 AM', status: 'Scheduled' },
 ];
 
 export const users: User[] = [
@@ -44,6 +46,7 @@ export const patients: Patient[] = [
         currentMedications: ['Lisinopril', 'Metformin'],
         appointments: [
             { id: 'A001', patientName: 'John Smith', doctor: { name: 'Dr. Emily Carter', department: 'Cardiology' }, date: '2024-08-15', time: '10:00 AM', status: 'Scheduled' },
+             { id: 'AP001', patientName: 'John Smith', doctor: { name: 'Dr. Emily Carter', department: 'Cardiology' }, date: '2024-07-10', time: '09:30 AM', status: 'Completed' },
         ],
         prescriptions: [
             { date: '2024-07-10', medication: 'Lisinopril 10mg', dosage: '1 tablet daily', notes: 'Monitor blood pressure.' }
@@ -73,7 +76,99 @@ export const patients: Patient[] = [
         ],
         labReports: [
             { id: 'R004', testName: 'Brain MRI', date: '2024-07-20', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report3/800/1100' },
-            { id: 'R005', testName: 'TSH', date: '2024-08-05', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report4/800/1100' }
+            { id: 'R005', testName: 'TSH', date: '2024-08-05', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report4/800/1100' },
+            { id: 'R006', testName: 'Vitamin D Level', date: '2024-08-14', status: 'Pending' },
+        ]
+    },
+    {
+        id: 'P003',
+        name: 'Lokesh Babu',
+        age: 62,
+        gender: 'Male',
+        bloodGroup: 'B+',
+        lastVisit: '2024-08-18',
+        primaryDoctorId: 'D005',
+        pin: '1122',
+        activeConditions: ['Coronary Artery Disease'],
+        currentMedications: ['Aspirin', 'Atorvastatin'],
+        appointments: [
+            { id: 'A006', patientName: 'Lokesh Babu', doctor: { name: 'Dr. Sofia Garcia', department: 'Cardiology' }, date: '2024-08-18', time: '10:00 AM', status: 'Scheduled' },
+        ],
+        prescriptions: [],
+        labReports: [
+            { id: 'R007', testName: 'Echocardiogram', date: '2024-08-10', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report5/800/1100' },
+            { id: 'R008', testName: 'Troponin-I', date: '2024-08-18', status: 'Pending' },
+        ]
+    },
+    {
+        id: 'P004',
+        name: 'Ashok Kumar',
+        age: 55,
+        gender: 'Male',
+        bloodGroup: 'AB+',
+        lastVisit: '2024-08-18',
+        primaryDoctorId: 'D002',
+        pin: '3344',
+        activeConditions: ['Parkinson\'s Disease'],
+        currentMedications: ['Levodopa'],
+        appointments: [
+             { id: 'A007', patientName: 'Ashok Kumar', doctor: { name: 'Dr. Ben Adams', department: 'Neurology' }, date: '2024-08-18', time: '11:00 AM', status: 'Scheduled' },
+        ],
+        prescriptions: [],
+        labReports: [
+             { id: 'R009', testName: 'DaTscan', date: '2024-08-11', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report6/800/1100' }
+        ]
+    },
+    {
+        id: 'P005',
+        name: 'Sathyam',
+        age: 48,
+        gender: 'Male',
+        bloodGroup: 'A+',
+        lastVisit: '2024-08-12',
+        primaryDoctorId: 'D004',
+        pin: '5566',
+        activeConditions: ['Osteoarthritis'],
+        currentMedications: ['NSAIDs'],
+        appointments: [],
+        prescriptions: [],
+        labReports: [
+            { id: 'R010', testName: 'Knee X-Ray', date: '2024-08-14', status: 'Pending' },
+        ]
+    },
+     {
+        id: 'P006',
+        name: 'Nageswarao',
+        age: 71,
+        gender: 'Male',
+        bloodGroup: 'O-',
+        lastVisit: '2024-08-05',
+        primaryDoctorId: 'D001',
+        pin: '7788',
+        activeConditions: ['Atrial Fibrillation'],
+        currentMedications: ['Warfarin'],
+        appointments: [],
+        prescriptions: [],
+        labReports: [
+            { id: 'R011', testName: 'INR', date: '2024-08-05', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report7/800/1100' },
+            { id: 'R012', testName: 'ECG', date: '2024-08-19', status: 'Pending' },
+        ]
+    },
+    {
+        id: 'P007',
+        name: 'Mahesh',
+        age: 30,
+        gender: 'Male',
+        bloodGroup: 'B-',
+        lastVisit: '2024-08-02',
+        primaryDoctorId: 'D004',
+        pin: '9900',
+        activeConditions: ['ACL Tear'],
+        currentMedications: [],
+        appointments: [],
+        prescriptions: [],
+        labReports: [
+            { id: 'R013', testName: 'Knee MRI', date: '2024-08-03', status: 'Completed', fileUrl: 'https://picsum.photos/seed/report8/800/1100' }
         ]
     }
 ];
