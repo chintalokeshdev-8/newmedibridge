@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import PageHeader from "@/components/shared/PageHeader";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { patients } from "@/lib/data";
 import { Clock, CheckCircle, BarChart2, DollarSign, Users } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
