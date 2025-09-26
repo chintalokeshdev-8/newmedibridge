@@ -1,3 +1,5 @@
+'use client';
+import { useState } from 'react';
 import PageHeader from "@/components/shared/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,8 +8,43 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TestTube, FileUp, CheckCircle, Clock } from 'lucide-react';
 import { patients } from "@/lib/data";
+import { useToast } from '@/hooks/use-toast';
 
 export default function LabDashboardPage() {
+    const { toast } = useToast();
+    const [testType, setTestType] = useState('');
+    const [patientId, setPatientId] = useState('');
+    const [file, setFile] = useState<File | null>(null);
+
+    const handleUpload = () => {
+        if (!testType || !patientId || !file) {
+            toast({
+                variant: 'destructive',
+                title: 'Missing Information',
+                description: 'Please select a test type, patient, and file to upload.',
+            });
+            return;
+        }
+
+        // Simulate upload
+        console.log('Uploading report:', { testType, patientId, fileName: file.name });
+
+        toast({
+            title: 'Upload Successful',
+            description: `Report for ${patients.find(p => p.id === patientId)?.name} has been uploaded.`,
+        });
+
+        // Reset form
+        setTestType('');
+        setPatientId('');
+        setFile(null);
+        // This is a bit of a hack to clear the file input visually
+        const fileInput = document.getElementById('report-file') as HTMLInputElement;
+        if (fileInput) {
+            fileInput.value = '';
+        }
+    };
+
   return (
     <div className="flex flex-1 flex-col">
       <PageHeader title="Lab Dashboard" />
@@ -53,7 +90,7 @@ export default function LabDashboardPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="test-type">Test Type</Label>
-                <Select>
+                <Select onValueChange={setTestType} value={testType}>
                   <SelectTrigger id="test-type">
                     <SelectValue placeholder="Select test type" />
                   </SelectTrigger>
@@ -68,7 +105,7 @@ export default function LabDashboardPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="patient">Patient</Label>
-                 <Select>
+                 <Select onValueChange={setPatientId} value={patientId}>
                   <SelectTrigger id="patient">
                     <SelectValue placeholder="Select a patient" />
                   </SelectTrigger>
@@ -82,10 +119,10 @@ export default function LabDashboardPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="report-file">Upload Report</Label>
-              <Input id="report-file" type="file" />
+              <Input id="report-file" type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} />
             </div>
             <div className="flex justify-end">
-                <Button>
+                <Button onClick={handleUpload}>
                     <FileUp className="mr-2 h-4 w-4" /> Upload
                 </Button>
             </div>
@@ -95,3 +132,4 @@ export default function LabDashboardPage() {
     </div>
   );
 }
+    

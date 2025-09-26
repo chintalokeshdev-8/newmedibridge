@@ -341,7 +341,7 @@ export default function PatientDetailPage() {
                                                 <p className="text-muted-foreground">with {appt.doctor.name} ({appt.doctor.department})</p>
                                             </div>
                                             <Badge variant={appt.status === 'Scheduled' ? 'default' : appt.status === 'Completed' ? 'secondary' : 'destructive'}
-                                            className={appt.status === 'Scheduled' ? 'bg-blue-500/20 text-blue-700' : ''}
+                                            className={appt.status === 'Scheduled' ? 'bg-blue-500/20 text-blue-700 border-blue-500/20' : appt.status === 'Completed' ? 'bg-green-500/20 text-green-700 border-green-500/20' : 'bg-red-500/20 text-red-700 border-red-500/20'}
                                             >{appt.status}</Badge>
                                         </li>
                                     ))}
@@ -421,3 +421,5 @@ export default function PatientDetailPage() {
         </div>
     );
 }
+
+    
