@@ -181,7 +181,13 @@ export default function LabDashboardPage() {
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="report-file">Report File</Label>
-                                <Input id="report-file" type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} disabled={!selectedTestId}/>
+                                <Input 
+                                    id="report-file" 
+                                    type="file" 
+                                    onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} 
+                                    disabled={!selectedTestId}
+                                    className="file:bg-primary file:text-primary-foreground file:hover:bg-primary/90 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold"
+                                />
                             </div>
                             <div className="flex justify-end">
                                 <Button onClick={handleUpload} disabled={!selectedTestId || !file}>
