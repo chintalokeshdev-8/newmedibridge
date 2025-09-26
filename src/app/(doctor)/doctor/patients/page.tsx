@@ -48,8 +48,6 @@ export default function PatientsPage() {
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>Patient ID / Token</TableHead>
-                  <TableHead>Age</TableHead>
-                  <TableHead>Gender</TableHead>
                   <TableHead>Last Visit</TableHead>
                   <TableHead><span className="sr-only">View</span></TableHead>
                 </TableRow>
@@ -59,8 +57,6 @@ export default function PatientsPage() {
                   <TableRow key={patient.id}>
                     <TableCell className="font-medium">{patient.name}</TableCell>
                     <TableCell>{patient.id} / {patient.token}</TableCell>
-                    <TableCell>{patient.age}</TableCell>
-                    <TableCell>{patient.gender}</TableCell>
                     <TableCell>{patient.lastVisit}</TableCell>
                     <TableCell className="text-right">
                       <Button variant="outline" size="sm" asChild>
