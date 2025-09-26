@@ -1,3 +1,4 @@
+
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -5,7 +6,7 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import PageHeader from "@/components/shared/PageHeader";
 import { patients, doctors } from "@/lib/data";
-import type { LabReport, Patient } from '@/lib/types';
+import type { LabReport, Patient, Prescription } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -16,7 +17,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
-import { FilePlus, User, Heart, Droplet, Calendar, Pill, Lock, FileText, Download, Activity, Pencil } from 'lucide-react';
+import { FilePlus, User, Heart, Droplet, Calendar, Pill, Lock, FileText, Download, Activity, Pencil, History } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const PinVerification = ({ onVerify }: { onVerify: (pin: string) => void }) => {
@@ -174,6 +175,8 @@ export default function PatientDetailPage() {
     const [isEditPatientOpen, setEditPatientOpen] = useState(false);
 
     const doctor = doctors.find(d => d.id === patient?.primaryDoctorId);
+    
+    const patientDoctorAppointments = patient?.appointments.filter(appt => appt.doctor.name === doctor?.name) || [];
 
     const handlePinVerify = (pin: string) => {
         if (patient && patient.pin === pin) {
@@ -192,7 +195,7 @@ export default function PatientDetailPage() {
     };
 
     const handleAddPrescription = () => {
-        if (!medication || !dosage) {
+        if (!patient || !medication || !dosage) {
             toast({
                 variant: 'destructive',
                 title: 'Missing Information',
@@ -200,7 +203,21 @@ export default function PatientDetailPage() {
             });
             return;
         }
-        console.log({ medication, dosage, notes });
+
+        const newPrescription: Prescription = {
+            date: new Date().toISOString().split('T')[0],
+            medication,
+            dosage,
+            notes,
+        };
+
+        const updatedPatient = {
+            ...patient,
+            prescriptions: [newPrescription, ...patient.prescriptions],
+        };
+
+        setPatient(updatedPatient);
+
         toast({
             title: 'Prescription Added',
             description: `${medication} has been prescribed.`,
@@ -286,16 +303,16 @@ export default function PatientDetailPage() {
                                     <Calendar className="h-4 w-4 text-muted-foreground" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">{patient.appointments.filter(a => a.status === 'Scheduled').length}</div>
+                                    <div className="text-2xl font-bold">{patientDoctorAppointments.filter(a => a.status === 'Scheduled').length}</div>
                                 </CardContent>
                             </Card>
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                    <CardTitle className="text-sm font-medium">Active Conditions</CardTitle>
-                                    <Heart className="h-4 w-4 text-muted-foreground" />
+                                    <CardTitle className="text-sm font-medium">Follow-ups / Past Visits</CardTitle>
+                                    <History className="h-4 w-4 text-muted-foreground" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">{patient.activeConditions.length}</div>
+                                    <div className="text-2xl font-bold">{patientDoctorAppointments.filter(a => a.status === 'Completed').length}</div>
                                 </CardContent>
                             </Card>
                              <Card>
@@ -332,9 +349,9 @@ export default function PatientDetailPage() {
                                </div>
                             </div>
                              <div className="space-y-4 lg:col-span-2">
-                               <h3 className="font-semibold text-lg flex items-center gap-2"><Calendar className="w-5 h-5 text-primary"/> Recent Appointments</h3>
+                               <h3 className="font-semibold text-lg flex items-center gap-2"><Calendar className="w-5 h-5 text-primary"/> Recent Appointments (with {doctor.name})</h3>
                                 <ul className="space-y-2">
-                                    {patient.appointments.slice(0,3).map(appt => (
+                                    {patientDoctorAppointments.slice(0,3).map(appt => (
                                         <li key={appt.id} className="flex justify-between items-center text-sm p-2 rounded-md border">
                                             <div>
                                                 <p className="font-medium">{appt.date} at {appt.time}</p>
@@ -347,6 +364,22 @@ export default function PatientDetailPage() {
                                     ))}
                                 </ul>
                             </div>
+                        </div>
+                        <Separator className="my-6" />
+                         <div>
+                             <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><FileText className="w-5 h-5 text-primary"/> Prescriptions</h3>
+                            <ul className="space-y-2">
+                                {patient.prescriptions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map((prescription, index) => (
+                                    <li key={index} className="flex flex-col text-sm p-3 rounded-md border bg-muted/50">
+                                        <div className="flex justify-between items-center mb-2">
+                                            <p className="font-medium text-base">{prescription.medication}</p>
+                                            <p className="text-muted-foreground text-xs">{prescription.date}</p>
+                                        </div>
+                                        <p><span className="font-medium">Dosage:</span> {prescription.dosage}</p>
+                                        {prescription.notes && <p className="text-muted-foreground mt-1"><span className="font-medium">Notes:</span> {prescription.notes}</p>}
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                         <Separator className="my-6" />
                          <div>
@@ -426,3 +459,4 @@ export default function PatientDetailPage() {
         </div>
     );
 }
+
