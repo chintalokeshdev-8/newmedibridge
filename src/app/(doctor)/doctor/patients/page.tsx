@@ -18,6 +18,12 @@ const getMostRecentAppointment = (patientName: string): Appointment | undefined 
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
 };
 
+const getLastCompletedVisit = (patientName: string): Appointment | undefined => {
+    return allAppointments
+        .filter(a => a.patientName === patientName && a.status === 'Completed')
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+}
+
 export default function PatientsPage() {
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -66,11 +72,12 @@ export default function PatientsPage() {
               <TableBody>
                 {filteredPatients.map(patient => {
                   const mostRecentAppointment = getMostRecentAppointment(patient.name);
+                  const lastCompletedVisit = getLastCompletedVisit(patient.name);
                   return (
                       <TableRow key={patient.id}>
                         <TableCell className="font-medium">{patient.name}</TableCell>
                         <TableCell>{patient.id} / {patient.token || 'N/A'}</TableCell>
-                        <TableCell>{patient.lastVisit}</TableCell>
+                        <TableCell>{lastCompletedVisit?.date || 'N/A'}</TableCell>
                         <TableCell>{mostRecentAppointment?.date || 'N/A'}</TableCell>
                         <TableCell>{mostRecentAppointment?.time || 'N/A'}</TableCell>
                         <TableCell>

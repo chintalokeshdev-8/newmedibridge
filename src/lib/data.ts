@@ -1,3 +1,4 @@
+
 import type { Doctor, Lab, Appointment, User, Patient } from './types';
 
 export const doctors: Doctor[] = [
@@ -23,7 +24,12 @@ export const appointments: Appointment[] = [
   { id: 'A005', patientName: 'David Brown', doctor: { name: 'Dr. Chloe Taylor', department: 'Pediatrics' }, date: '2024-08-17', time: '03:00 PM', status: 'Scheduled' },
   { id: 'A006', patientName: 'Lokesh Babu', doctor: { name: 'Dr. Sofia Garcia', department: 'Cardiology' }, date: '2024-08-18', time: '10:00 AM', status: 'Scheduled' },
   { id: 'A007', patientName: 'Ashok Kumar', doctor: { name: 'Dr. Ben Adams', department: 'Neurology' }, date: '2024-08-18', time: '11:00 AM', status: 'Scheduled' },
+  // Adding past completed appointments for more realistic "Last Visit" data
+  { id: 'A008', patientName: 'John Smith', doctor: { name: 'Dr. Emily Carter', department: 'Cardiology' }, date: '2024-07-10', time: '10:00 AM', status: 'Completed' },
+  { id: 'A009', patientName: 'Jane Doe', doctor: { name: 'Dr. Ben Adams', department: 'Neurology' }, date: '2024-07-12', time: '11:30 AM', status: 'Completed' },
+  { id: 'A010', patientName: 'Lokesh Babu', doctor: { name: 'Dr. Sofia Garcia', department: 'Cardiology' }, date: '2024-07-18', time: '10:00 AM', status: 'Completed' },
 ];
+
 
 export const users: User[] = [
   { id: 'U001', name: 'Admin User', role: 'Admin', email: 'admin@medibridge.app', status: 'Active' },
@@ -40,7 +46,7 @@ export const patients: Patient[] = [
         age: 45,
         gender: 'Male',
         bloodGroup: 'O+',
-        lastVisit: '2024-08-15',
+        lastVisit: '2024-07-10', // Corrected last visit
         primaryDoctorId: 'D001',
         pin: '1234',
         activeConditions: ['Hypertension', 'Type 2 Diabetes'],
@@ -65,7 +71,7 @@ export const patients: Patient[] = [
         age: 34,
         gender: 'Female',
         bloodGroup: 'A-',
-        lastVisit: '2024-08-15',
+        lastVisit: '2024-07-12', // Corrected last visit
         primaryDoctorId: 'D002',
         pin: '5678',
         activeConditions: ['Migraine'],
@@ -89,7 +95,7 @@ export const patients: Patient[] = [
         age: 62,
         gender: 'Male',
         bloodGroup: 'B+',
-        lastVisit: '2024-08-18',
+        lastVisit: '2024-07-18', // Corrected last visit
         primaryDoctorId: 'D005',
         pin: '1122',
         activeConditions: ['Coronary Artery Disease'],
@@ -110,7 +116,7 @@ export const patients: Patient[] = [
         age: 55,
         gender: 'Male',
         bloodGroup: 'AB+',
-        lastVisit: '2024-08-18',
+        lastVisit: '2024-08-01', // Example last visit
         primaryDoctorId: 'D002',
         pin: '3344',
         activeConditions: ['Parkinson\'s Disease'],
@@ -130,7 +136,7 @@ export const patients: Patient[] = [
         age: 48,
         gender: 'Male',
         bloodGroup: 'A+',
-        lastVisit: '2024-08-12',
+        lastVisit: '2024-07-25', // Example last visit
         primaryDoctorId: 'D004',
         pin: '5566',
         activeConditions: ['Osteoarthritis'],
