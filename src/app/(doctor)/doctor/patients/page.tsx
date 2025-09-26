@@ -15,7 +15,8 @@ export default function PatientsPage() {
 
     const filteredPatients = initialPatients.filter(patient =>
         patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        patient.id.toLowerCase().includes(searchTerm.toLowerCase())
+        patient.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient.token?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
   return (
@@ -46,6 +47,7 @@ export default function PatientsPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
+                  <TableHead>Patient ID / Token</TableHead>
                   <TableHead>Age</TableHead>
                   <TableHead>Gender</TableHead>
                   <TableHead>Last Visit</TableHead>
@@ -56,6 +58,7 @@ export default function PatientsPage() {
                 {filteredPatients.map(patient => (
                   <TableRow key={patient.id}>
                     <TableCell className="font-medium">{patient.name}</TableCell>
+                    <TableCell>{patient.id} / {patient.token}</TableCell>
                     <TableCell>{patient.age}</TableCell>
                     <TableCell>{patient.gender}</TableCell>
                     <TableCell>{patient.lastVisit}</TableCell>

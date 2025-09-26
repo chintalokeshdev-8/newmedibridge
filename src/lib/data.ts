@@ -35,6 +35,7 @@ export const users: User[] = [
 export const patients: Patient[] = [
     {
         id: 'P001',
+        token: 'T001',
         name: 'John Smith',
         age: 45,
         gender: 'Male',
@@ -59,6 +60,7 @@ export const patients: Patient[] = [
     },
     {
         id: 'P002',
+        token: 'T002',
         name: 'Jane Doe',
         age: 34,
         gender: 'Female',
@@ -82,6 +84,7 @@ export const patients: Patient[] = [
     },
     {
         id: 'P003',
+        token: 'T003',
         name: 'Lokesh Babu',
         age: 62,
         gender: 'Male',
@@ -102,6 +105,7 @@ export const patients: Patient[] = [
     },
     {
         id: 'P004',
+        token: 'T004',
         name: 'Ashok Kumar',
         age: 55,
         gender: 'Male',
@@ -121,6 +125,7 @@ export const patients: Patient[] = [
     },
     {
         id: 'P005',
+        token: 'T005',
         name: 'Sathyam',
         age: 48,
         gender: 'Male',
@@ -138,6 +143,7 @@ export const patients: Patient[] = [
     },
      {
         id: 'P006',
+        token: 'T006',
         name: 'Nageswarao',
         age: 71,
         gender: 'Male',
@@ -156,6 +162,7 @@ export const patients: Patient[] = [
     },
     {
         id: 'P007',
+        token: 'T007',
         name: 'Mahesh',
         age: 30,
         gender: 'Male',

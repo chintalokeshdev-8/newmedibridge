@@ -60,6 +60,7 @@ export type LabReport = {
 
 export type Patient = {
     id: string;
+    token?: string;
     name: string;
     age: number;
     gender: 'Male' | 'Female' | 'Other';
