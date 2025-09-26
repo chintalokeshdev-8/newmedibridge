@@ -15,7 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { FilePlus, User, Heart, Droplet, Calendar, Pill, Lock, FileText, Download, Activity, Pencil } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
@@ -414,17 +414,15 @@ export default function PatientDetailPage() {
                         )}
                     </DialogContent>
                 </Dialog>
-                <EditPatientDialog
-                    patient={patient}
-                    open={isEditPatientOpen}
-                    onOpenChange={setEditPatientOpen}
-                    onSave={handleSavePatient}
-                />
+                {patient && (
+                    <EditPatientDialog
+                        patient={patient}
+                        open={isEditPatientOpen}
+                        onOpenChange={setEditPatientOpen}
+                        onSave={handleSavePatient}
+                    />
+                )}
             </main>
         </div>
     );
 }
-
-    
-
-    
