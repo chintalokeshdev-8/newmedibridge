@@ -362,12 +362,15 @@ export default function PatientDetailPage() {
                                             <Badge variant={report.status === 'Completed' ? 'secondary' : 'default'}
                                             className={report.status === 'Completed' ? 'bg-green-500/20 text-green-700 border-green-500/20' : 'bg-yellow-500/20 text-yellow-700 border-yellow-500/20' }
                                             >{report.status}</Badge>
-                                            {report.status === 'Completed' && report.fileUrl && (
-                                                <Button variant="outline" size="sm" onClick={() => viewReport(report)}>
-                                                    <Download className="mr-2 h-3 w-3" />
-                                                    View
-                                                </Button>
-                                            )}
+                                            <Button 
+                                                variant="outline" 
+                                                size="sm" 
+                                                onClick={() => viewReport(report)}
+                                                disabled={report.status !== 'Completed' || !report.fileUrl}
+                                            >
+                                                <Download className="mr-2 h-3 w-3" />
+                                                View
+                                            </Button>
                                         </div>
                                     </li>
                                 ))}
@@ -421,5 +424,7 @@ export default function PatientDetailPage() {
         </div>
     );
 }
+
+    
 
     
