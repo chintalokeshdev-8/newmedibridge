@@ -34,7 +34,7 @@ import {
 } from 'lucide-react';
 
 const navItems = [
-  { href: '/doctor/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  { href: '/doctor/dashboard', icon: LayoutDashboard, label: 'Referral Patients' },
   { href: '/doctor/patients', icon: Users, label: 'Patients' },
   { href: '/doctor/appointments', icon: Calendar, label: 'Appointments' },
 ];

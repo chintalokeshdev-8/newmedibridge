@@ -1,21 +1,45 @@
 
+'use client';
+import { useState } from 'react';
 import Link from 'next/link';
 import PageHeader from "@/components/shared/PageHeader";
-import { patients } from "@/lib/data";
+import { patients as initialPatients } from "@/lib/data";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Search, UserPlus } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 export default function PatientsPage() {
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const filteredPatients = initialPatients.filter(patient =>
+        patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient.id.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
   return (
     <div className="flex flex-1 flex-col">
       <PageHeader title="Patient Management" />
       <main className="flex-1 p-4 md:p-6">
         <Card>
           <CardHeader>
-            <CardTitle>Patient List</CardTitle>
-            <CardDescription>A list of all patients assigned to you.</CardDescription>
+            <div className="flex justify-between items-center">
+                <div>
+                    <CardTitle>Patient List</CardTitle>
+                    <CardDescription>A list of all patients assigned to you.</CardDescription>
+                </div>
+                 <div className="relative flex-1 max-w-sm">
+                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                      type="search"
+                      placeholder="Search patients..."
+                      className="w-full rounded-lg bg-background pl-8"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
             <Table>
@@ -29,7 +53,7 @@ export default function PatientsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {patients.map(patient => (
+                {filteredPatients.map(patient => (
                   <TableRow key={patient.id}>
                     <TableCell className="font-medium">{patient.name}</TableCell>
                     <TableCell>{patient.age}</TableCell>
