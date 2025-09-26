@@ -19,9 +19,10 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="admin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="admin">Admin</TabsTrigger>
               <TabsTrigger value="doctor">Doctor</TabsTrigger>
+              <TabsTrigger value="lab">Lab Staff</TabsTrigger>
             </TabsList>
             <TabsContent value="admin">
                 <div className="grid gap-4 pt-4">
@@ -50,6 +51,21 @@ export default function LoginPage() {
                   </div>
                   <Button type="submit" className="w-full" asChild>
                     <Link href="/doctor/dashboard">Login as Doctor</Link>
+                  </Button>
+                </div>
+            </TabsContent>
+             <TabsContent value="lab">
+               <div className="grid gap-4 pt-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="lab-email">Email</Label>
+                    <Input id="lab-email" type="email" placeholder="lab@example.com" required />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="lab-password">Password</Label>
+                    <Input id="lab-password" type="password" required defaultValue="password" />
+                  </div>
+                  <Button type="submit" className="w-full" asChild>
+                    <Link href="/lab/dashboard">Login as Lab Staff</Link>
                   </Button>
                 </div>
             </TabsContent>
