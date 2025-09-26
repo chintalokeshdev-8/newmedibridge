@@ -106,7 +106,7 @@ export default function PatientsPage() {
                       <Button size="sm" asChild>
                         <Link href={`/doctor/patients/${patient.id}`}>
                           View Details
-                          <ArrowRight className="ml-2 h-4 w-4" />
+                          <ArrowRight className="ml-2 h-4 w-4 animate-nudge-right" />
                         </Link>
                       </Button>
                     </TableCell>
